@@ -1,6 +1,6 @@
 ---
 title: "Situación Problema"
-author: "Camila Turner Escalante"
+author: "Camila Turner Escalante, A01423579<br>Ramona Nájera Fuentes, A01423596<br>Patricio<br>Asad"
 date: "25/05/2022"
 output: 
   html_document: 
@@ -10,26 +10,97 @@ output:
     number_sections: yes
 ---
 
-```{r setup, include=TRUE}
-knitr::opts_chunk$set(echo = TRUE)
+## Información inicial
+**Empresa:**
+<br>Se dedica a la producción de piezas automotrices a base de Polipropileno<br>
+**Problema:**
+<br>El porcentaje de defectos está por los cielos<br>
+
+**Objetivo:**
+<br>Determinar las variables importantes para el proceso de extrusión de Polipropileno en una máquina de tornillo sencillo para mejorar la producción.<br>
+**Métrica:**
+<br>Porcentaje de producto defectuoso (cociente entre los defectuosos y el total producido)<br>
+
+| Porcentaje actual | Porcentaje máximo |
+|:-----------------:|:-----------------:|
+|        40%        |        16%        |
+
+## Máquina de extrusión: Welex
+![](Diagrama_Welex.png)
+<br>
+**Información técnica:**
+<br>Hay 9 variables que podrían afectar la calidad del producto (A-I)<br>
+
+| ID | Variable                            |
+|:--:|:------------------------------------|
+| A  | Presión bomba                       |
+| B  | Temperatura plástico 3 (bomba)      | 
+| C  | Temperatura plástico 4 (mezcladora) |
+| D  | Temperatura tornillo (usillo)       |
+| E  | RPM tornillo (usillo)               |
+| F  | Temperatura barril                  | 
+| G  | Velocidad extrusión                 |
+| H  | Temperatura enfriadores             |
+| I  | Tipo materia prima                  |
+| Y  | Porcentaje de defectos              |
+
+
+## Preparación del entorno y de los datos
+```{r, message=FALSE}
+#install.packages("readxl")   # Read Excel Files
+library(readxl)
+#install.packages("dplyr")    # A Grammar of Data Manipulation
+library(dplyr)
+#install.packages("skimr")    # Compact and Flexible Summaries of Data 
+library(skimr)
+#install.packages("psych")    # Personality/Psychometric/Psychological research
+library(psych)
+#install.packages("GGally")   # Extension to 'ggplot2'
+library(GGally)
+#install.packages("Hmisc")    # Harrell Miscellaneous
+library(Hmisc)
+#install.packages("corrplot") # Visualization of a Correlation Matrix 
+library(corrplot)
 ```
 
-## R Markdown
+```{r, message=FALSE}
+# Leer info de la producción
+datos <- read_excel("./Datos_reto.xlsx", sheet=3, skip=1)
+attach(datos)
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+data <- rename(datos, P_bomba     = A,
+       T_plastic3     = B,
+       T_plastic4     = C,
+       T_tornillo     = D,
+       RPM_tornillo   = E,
+       T_barril       = F,
+       V_extrusión    = G,
+       T_enfriadores  = H,
+       Tipo_matPrima  = I,
+       PCT_defectos   = Y)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r, message=FALSE}
+# Revisón rápida de los datos
+skimr::skim(data)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Exploración inicial de los datos
+Para ver la relación entre ellos e identificar cuáles son los más apropiados para usar en nuestra regresión
+```{r, message=FALSE}
+#pairs(datos, pch=20) # Para ir buscando relaciones entre las variables
+
+# 1.CHECAR LA DISTRIBUCIÓN NORMAL mediante histogramas  
+multi.hist(x=data, dcol=c("blue", "red"), dlty=c("dotted", "solid"), lwd=c(2, 1), main=c("P_bomba", "T_plastic3", "T_plastic4", "T_tornillo", "RPM_tornillo", "T_barril", "V_extrusión", "T_enfriadores", "Tipo_matPrima", "PCT_defectos"))
+```
+```{r, message=FALSE}
+# 2.IDENTIFICAR VARIABLES CON CORRELACIÓN ALTA, pues podrían representar un problema
+ggpairs(data)
+
+ggpairs(datos, upper=list(continuous="smooth"), lower=list(continuous="blank"), diag=list(continuous="densityDiag"))
+
+rcorr(as.matrix(datos))
+
+corrplot(cor(data)) # Correlograma
+```
