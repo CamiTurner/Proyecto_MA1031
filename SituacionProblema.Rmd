@@ -1,6 +1,6 @@
 ---
 title: "Situación Problema"
-author: "Camila Turner Escalante, A01423579<br>Ramona Nájera Fuentes, A01423596<br>Patricio A01423897<br>Asad"
+author: "Camila Turner Escalante, A01423579<br><br>Ramona Nájera Fuentes, A01423596<br><br>Patricio Álvarez Hernández, A01423897<br><br>Asad Casis López, A01424665"
 date: "25/05/2022"
 output: 
   html_document: 
@@ -31,18 +31,18 @@ output:
 **Información técnica:**
 <br>Hay 9 variables que podrían afectar la calidad del producto (A-I)<br>
 
-| ID | Variable                            |
-|:--:|:------------------------------------|
-| A  | Presión bomba                       |
-| B  | Temperatura plástico 3 (bomba)      | 
-| C  | Temperatura plástico 4 (mezcladora) |
-| D  | Temperatura tornillo (usillo)       |
-| E  | RPM tornillo (usillo)               |
-| F  | Temperatura barril                  | 
-| G  | Velocidad extrusión                 |
-| H  | Temperatura enfriadores             |
-| I  | Tipo materia prima                  |
-| Y  | Porcentaje de defectos              |
+| ID | Variable                            | Unidades |
+|:--:|:-----------------------------------:|:--------:|
+| A  | Presión bomba                       |    Bar   |
+| B  | Temperatura plástico 3 (bomba)      |    °C    |
+| C  | Temperatura plástico 4 (mezcladora) |    °C    |
+| D  | Temperatura tornillo (usillo)       |    °C    |
+| E  | RPM tornillo (usillo)               |    rpm   |
+| F  | Temperatura barril                  |    °C    |
+| G  | Velocidad extrusión                 |    m/s   |
+| H  | Temperatura enfriadores             |    °C    |
+| I  | Tipo materia prima                  |    ---   |
+| Y  | Porcentaje de defectos              |     %    |
 
 
 ## Preparación del entorno y de los datos
