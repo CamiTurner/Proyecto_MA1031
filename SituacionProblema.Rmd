@@ -1,6 +1,6 @@
 ---
 title: "Situación Problema"
-author: "Camila Turner Escalante, A01423579<br>Ramona Nájera Fuentes, A01423596<br>Patricio<br>Asad"
+author: "Camila Turner Escalante, A01423579<br>Ramona Nájera Fuentes, A01423596<br>Patricio A01423897<br>Asad"
 date: "25/05/2022"
 output: 
   html_document: 
