@@ -104,3 +104,19 @@ rcorr(as.matrix(datos))
 
 corrplot(cor(data)) # Correlograma
 ```
+
+## Modelo de regresión lineal múltiple
+
+```{r}
+modeloRM <- lm(Y~A+B+C+D+E+F+G+H+I)
+summary(modeloRM)
+anova(modeloRM)
+
+```
+
+
+
+```{r}
+plot(modeloRM)
+```
+
