@@ -105,7 +105,10 @@ rcorr(as.matrix(datos))
 corrplot(cor(data)) # Correlograma
 ```
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> 1d2d0247898f43481e1d3c5eb322afc3caf5272d
 ## Modelo de regresión lineal múltiple
 
 ```{r}
