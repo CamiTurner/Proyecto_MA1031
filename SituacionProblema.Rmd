@@ -119,6 +119,7 @@ anova(modeloRM)
 
 ```
 
+<br>
 
 Si quitamos las variables velocidad extrusión (G), temperatura enfriadores (H) y tipo materia prima (I) que en el modelo pasado tenían un valor p mayor a alfa (0.05), esto es lo que queda
 ```{r}
@@ -136,6 +137,8 @@ step(modeloRM)
 
 ```
 
+<br>
+
 De acuerdo con la función _step()_, el mejor modelo es utilizando las variables A,B,C,D,E y F y se rechaza la hiótesis nula, por lo que también conservamos el valor del intercepto. La R^2 ajustada tiene un valor de 0.7293. 
 
 <br>
@@ -145,6 +148,8 @@ Ahora hacemos la validación de los residuos con sus gráficas.
 plot(modeloRM2)
 
 ```
+
+<br>
 
 Hacemos otras pruebas para validar los residuos. En estas pruebas el valor p tiene que ser mayor a alfa (0.05).
 ```{r}
@@ -158,7 +163,13 @@ bptest(modeloRM2)
 lillie.test(modeloRM2$residuals)
 ```
 
+<br>
+
 Afortunadamente, todas las pruebas cumplieron con el requisito de tener un valor p mayor a alfa (0.05).
+
+<br>
+<br>
+<br>
 
 
 
