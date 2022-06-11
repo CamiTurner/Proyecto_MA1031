@@ -61,6 +61,10 @@ library(GGally)
 library(Hmisc)
 #install.packages("corrplot") # Visualization of a Correlation Matrix 
 library(corrplot)
+#install.packages("lmtest")   # Prueba Durbin-Watson para comprobar independencia de los residuos
+library(lmtest)               # También prueba Breusch-Pagan para la homoscedasticidad
+#install.packages("nortest")  # Varias pruebas para verificar supuesto de normalidad en los residuos
+library(nortest)
 ```
 
 ```{r, message=FALSE}
@@ -105,14 +109,7 @@ rcorr(as.matrix(datos))
 corrplot(cor(data)) # Correlograma
 ```
 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-=======
-
->>>>>>> 1d2d0247898f43481e1d3c5eb322afc3caf5272d
->>>>>>> fde2b3133ee506146984acec53304795ce81feca
 ## Modelo de regresión lineal múltiple
 
 ```{r}
@@ -136,9 +133,43 @@ Después de hacer este segundo modelo observamos que R^2 ajustada casi no cambi�
 Ahora vamos a usar la función _step()_ para obtener el mejor modelo de regresión lineal múltiple.
 ```{r}
 step(modeloRM)
+
 ```
 
 De acuerdo con la función _step()_, el mejor modelo es utilizando las variables A,B,C,D,E y F y se rechaza la hiótesis nula, por lo que también conservamos el valor del intercepto. La R^2 ajustada tiene un valor de 0.7293. 
+
+<br>
+
+Ahora hacemos la validación de los residuos con sus gráficas.
+```{r}
+plot(modeloRM2)
+
+```
+
+Hacemos otras pruebas para validar los residuos. En estas pruebas el valor p tiene que ser mayor a alfa (0.05).
+```{r}
+# Prueba Durbin-Watson (independencia de los residuos)
+dwtest(modeloRM2, data = y)
+
+# Prueba Breusch-Pagan para la homoscedasticidad
+bptest(modeloRM2)
+
+# Para revisar la normalidad de los residuos
+lillie.test(modeloRM2$residuals)
+```
+
+Afortunadamente, todas las pruebas cumplieron con el requisito de tener un valor p mayor a alfa (0.05).
+
+
+
+
+
+
+
+
+
+
+
 
 
 
