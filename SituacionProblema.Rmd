@@ -120,3 +120,11 @@ anova(modeloRM)
 plot(modeloRM)
 ```
 
+
+
+
+
+
+
+
+
