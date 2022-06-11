@@ -9,22 +9,22 @@ attach(piezas)
 
 piezas = piezas[ -c(1,4,7) ]
 piezas = rename(piezas, producidasA     = 1,
-               defectuosasA     = 2,
-               producidasB     = 3,
-               defectuosasB     = 4,
-               producidasC   = 5,
-               defectuosasC       = 6)
+                defectuosasA     = 2,
+                producidasB     = 3,
+                defectuosasB     = 4,
+                producidasC   = 5,
+                defectuosasC       = 6)
 
 # --------------------------------- PRODUCTO A --------------------------------- 
 
 # Convertimos los datos a time series
 productoA = ts(piezas$defectuosasA, start=c(2020, 6), frequency=12)
-
+str(productoA)
 # Diagrama de caja y brazos
-#boxplot(productoA ~ cycle(productoA)) 
+boxplot(productoA ~ cycle(productoA)) 
 
 pA = decompose(productoA)
-#plot(pA, xlab='Año')
+plot(pA, xlab='Año')
 desestacionalizadosA = productoA-pA$seasonal
 plot(desestacionalizadosA, main="Registros defectuosos del producto A")
 
@@ -41,12 +41,13 @@ acf(yA) # Función de autocorrelación
 acf(yA, plot=FALSE)$acf # Altura de las líneas
 
 # Verificar si tenemos o no ruido blanco
-#plot.ts(productoA)
+plot.ts(pA$random, col="6")
+mean(pA$random)
 #mean(productoA)
-#Box.test(productoA) # Prueba de hipótesis
-                    #   H0: Ruido blanco
-                    #   Ha: No es ruido blanco
-                    #   Si p-value >= alpha     NO RECHAZO HIPÓTESIS NULA
+Box.test(pA$random) # Prueba de hipótesis
+#   H0: Ruido blanco
+#   Ha: No es ruido blanco
+#   Si p-value >= alpha     NO RECHAZO HIPÓTESIS NULA
 
 # --------------------------------- PRODUCTO B --------------------------------- 
 
@@ -54,7 +55,7 @@ acf(yA, plot=FALSE)$acf # Altura de las líneas
 productoB = ts(piezas$defectuosasB, start=c(2020, 6), frequency=12)
 
 # Diagrama de caja y brazos
-#boxplot(productoB ~ cycle(productoB)) 
+boxplot(productoB ~ cycle(productoB)) 
 
 pB = decompose(productoB)
 #plot(pB, xlab='Año')
@@ -74,9 +75,9 @@ acf(yB) # Función de autocorrelación
 acf(yB, plot=FALSE)$acf # Altura de las líneas
 
 # Verificar si tenemos o no ruido blanco
-#plot.ts(productoB)
-#mean(productoB)
-#Box.test(productoB) # Prueba de hipótesis
+plot.ts(pB$random, col="6")
+mean(pB$random)
+Box.test(pB$random) # Prueba de hipótesis
 #   H0: Ruido blanco
 #   Ha: No es ruido blanco
 #   Si p-value >= alpha     NO RECHAZO HIPÓTESIS NULA
@@ -87,7 +88,7 @@ acf(yB, plot=FALSE)$acf # Altura de las líneas
 productoC = ts(piezas$defectuosasC, start=c(2020, 6), frequency=12)
 
 # Diagrama de caja y brazos
-#boxplot(productoC ~ cycle(productoC)) 
+boxplot(productoC ~ cycle(productoC)) 
 
 pC = decompose(productoC)
 #plot(pC, xlab='Año')
@@ -107,9 +108,9 @@ acf(yC) # Función de autocorrelación
 acf(yC, plot=FALSE)$acf # Altura de las líneas
 
 # Verificar si tenemos o no ruido blanco
-#plot.ts(productoC)
-#mean(productoC)
-#Box.test(productoC) # Prueba de hipótesis
+plot.ts(pC$random, col="6")
+mean(pC$random)
+Box.test(pC$random) # Prueba de hipótesis
 #   H0: Ruido blanco
 #   Ha: No es ruido blanco
 #   Si p-value >= alpha     NO RECHAZO HIPÓTESIS NULA
