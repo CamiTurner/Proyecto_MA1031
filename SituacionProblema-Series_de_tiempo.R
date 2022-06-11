@@ -21,7 +21,7 @@ piezas = rename(piezas, producidasA     = 1,
 productoA = ts(piezas$defectuosasA, start=c(2020, 6), frequency=12)
 str(productoA)
 # Diagrama de caja y brazos
-#boxplot(productoA ~ cycle(productoA)) 
+boxplot(productoA ~ cycle(productoA)) 
 
 pA = decompose(productoA)
 plot(pA, xlab='Año')
@@ -55,10 +55,10 @@ Box.test(pA$random) # Prueba de hipótesis
 productoB = ts(piezas$defectuosasB, start=c(2020, 6), frequency=12)
 
 # Diagrama de caja y brazos
-#boxplot(productoB ~ cycle(productoB)) 
+boxplot(productoB ~ cycle(productoB)) 
 
 pB = decompose(productoB)
-#plot(pB, xlab='Año')
+plot(pB, xlab='Año')
 desestacionalizadosB = productoB-pB$seasonal
 plot(desestacionalizadosB, main="Registros defectuosos del producto B")
 
@@ -88,10 +88,10 @@ Box.test(pB$random) # Prueba de hipótesis
 productoC = ts(piezas$defectuosasC, start=c(2020, 6), frequency=12)
 
 # Diagrama de caja y brazos
-#boxplot(productoC ~ cycle(productoC)) 
+boxplot(productoC ~ cycle(productoC)) 
 
 pC = decompose(productoC)
-#plot(pC, xlab='Año')
+plot(pC, xlab='Año')
 desestacionalizadosC = productoC-pC$seasonal
 plot(desestacionalizadosC, main="Registros defectuosos del producto C")
 
