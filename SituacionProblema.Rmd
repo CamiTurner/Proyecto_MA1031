@@ -115,7 +115,7 @@ anova(modeloRM)
 ```
 
 
-
+## Graficas
 ```{r}
 plot(modeloRM)
 ```
