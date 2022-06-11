@@ -105,10 +105,7 @@ rcorr(as.matrix(datos))
 corrplot(cor(data)) # Correlograma
 ```
 
-<<<<<<< HEAD
-=======
 
->>>>>>> main
 ## Modelo de regresión lineal múltiple
 
 ```{r}
@@ -125,13 +122,3 @@ anova(modeloRM)
 plot(modeloRM)
 ```
 
-
-
-
-
-
-
-
-
-=======
->>>>>>> main
