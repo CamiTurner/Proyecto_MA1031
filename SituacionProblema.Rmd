@@ -105,6 +105,7 @@ rcorr(as.matrix(datos))
 corrplot(cor(data)) # Correlograma
 ```
 
+
 ## Modelo de regresión lineal múltiple
 
 ```{r}
@@ -113,3 +114,27 @@ summary(modeloRM)
 anova(modeloRM)
 
 ```
+
+
+Si quitamos las variables velocidad extrusión (G), temperatura enfriadores (H) y tipo materia prima (I) que en el modelo pasado tenían un valor p mayor a alfa (0.05), esto es lo que queda
+```{r}
+modeloRM2 <- lm(Y~A+B+C+D+E+F)
+summary(modeloRM2)
+anova(modeloRM2)
+
+```
+
+Después de hacer este segundo modelo observamos que R^2 ajustada casi no cambió y sigue siendo un valor aceptable. En cuanto a los valores p de las variables, todos están por debajo del valor alfa (0.05).
+\
+Ahora vamos a usar la función _step()_ para obtener el mejor modelo de regresión lineal múltiple.
+```{r}
+step(modeloRM)
+```
+
+De acuerdo con la función _step()_, el mejor modelo es utilizando las variables A,B,C,D,E y F y se rechaza la hiótesis nula, por lo que también conservamos el valor del intercepto. La R^2 ajustada tiene un valor de 0.7293. 
+
+
+
+
+
+
