@@ -122,3 +122,105 @@ anova(modeloRM)
 plot(modeloRM)
 ```
 
+## Series de tiempo
+```{r}
+# Lectura de los datos
+piezas = read_excel("./Datos_reto.xlsx", sheet=1, skip=2)
+attach(piezas)
+
+piezas = piezas[ -c(1,4,7) ]
+piezas = rename(piezas, producidasA     = 1,
+                defectuosasA     = 2,
+                producidasB     = 3,
+                defectuosasB     = 4,
+                producidasC   = 5,
+                defectuosasC       = 6)
+
+# Convertimos los datos a time series
+productoA = ts(piezas$defectuosasA, start=c(2020, 6), frequency=12)
+productoB = ts(piezas$defectuosasB, start=c(2020, 6), frequency=12)
+productoC = ts(piezas$defectuosasC, start=c(2020, 6), frequency=12)
+str(productoA)
+str(productoB)
+str(productoC)
+
+# Diagrama de caja y brazos
+#   Despliega una columna por cada mes de todos los años observados
+boxplot(productoA ~ cycle(productoA)) 
+boxplot(productoB ~ cycle(productoB)) 
+boxplot(productoC ~ cycle(productoC)) 
+```
+
+```{r}
+pA = decompose(productoA)
+plot(pA, xlab='Año')
+desestacionalizadosA = productoA-pA$seasonal
+plot(desestacionalizadosA, main="Registros defectuosos del producto A")
+
+pB = decompose(productoB)
+plot(pB, xlab='Año')
+desestacionalizadosB = productoB-pB$seasonal
+plot(desestacionalizadosB, main="Registros defectuosos del producto B")
+
+pC = decompose(productoC)
+plot(pC, xlab='Año')
+desestacionalizadosC = productoC-pC$seasonal
+plot(desestacionalizadosC, main="Registros defectuosos del producto C")
+```
+
+```{r}
+# Eliminación de tendencia
+xA = log(productoA) # Estabilización de la varianza
+dif1A = diff(xA); plot(dif1A)
+dif2A = diff(dif1A, lag=12); plot(dif2A)
+acf(dif2A, plot=FALSE)$acf; acf(dif2A) # Autocorrelación: Alturas = Correlaciones
+
+xB = log(productoB) 
+dif1B = diff(xB); plot(dif1B)
+dif2B = diff(dif1B, lag=12); plot(dif2B)
+acf(dif2B, plot=FALSE)$acf; acf(dif2B) 
+
+xC = log(productoC) 
+dif1C = diff(xC); plot(dif1C)
+dif2C = diff(dif1C, lag=12); plot(dif2C)
+acf(dif2C, plot=FALSE)$acf; acf(dif2C)
+```
+
+```{r}
+# Verificar si tenemos o no ruido blanco
+plot.ts(pA$random, col="6")
+mean(pA$random)
+Box.test(pA$random) # Prueba de hipótesis
+
+plot.ts(pB$random, col="6")
+mean(pB$random)
+Box.test(pB$random)
+
+plot.ts(pC$random, col="6")
+mean(pC$random)
+Box.test(pC$random) 
+```
+
+```{r}
+pronos1A = ma(productoA, order=3) # Media móvil (serie, periodos hacia atrás)
+plot(productoA)
+lines(pronos1A, col="red")
+
+model1A = arima(productoA, order=c(0,0,0)) # c(p,d,q) c(AutoRegresivo,I,MA)
+pAadd = decompose(productoA, type="additive")
+pAmult = decompose(productoA, type="multiplicative")
+summary(model1A)
+
+auto.arima(productoA, trace=T) # En automático selecciona los valores para AR,I,MA
+                               # Best model: ARIMA(0,0,0)
+
+pAforecast = forecast(model1A, h=5); pAforecast
+plot(pAforecast)
+
+forecastA = predict(model1A, 5); forecastA
+
+fcA = sma(productoA, order=10, h=4, silent=FALSE) # SmoothMovingAverage
+summary(fcA)
+fcPA = forecast(fcA); plot(fcPA)
+print(fcPA)
+```
