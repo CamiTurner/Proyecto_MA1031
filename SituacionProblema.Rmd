@@ -271,9 +271,10 @@ plot(pAforecast)
 
 forecastA = predict(model1A, 5); forecastA
 
-fcA = sma(productoA, order=4, h=4, silent=FALSE) # SmoothMovingAverage
+fcA = sma(productoA, order=3, h=4, silent=FALSE) # SmoothMovingAverage
 summary(fcA)
 fcPA = forecast(fcA); plot(fcPA)
+fcPA
 print(fcPA)
 ```
 
