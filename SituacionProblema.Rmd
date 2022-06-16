@@ -175,6 +175,8 @@ Afortunadamente, todas las pruebas cumplieron con el requisito de tener un valor
 <br>
 
 ## Series de tiempo
+
+En este bloque de código se leen los datos, se convierten a un objeto de tipo serie de tiempo y hacemos el diagrama de caja y brazos para cada producto, es decir, para el producto A, el producto B y el producto C.
 ```{r}
 # Lectura de los datos
 piezas = read_excel("./Datos_reto.xlsx", sheet=1, skip=2)
@@ -253,6 +255,8 @@ mean(pC$random)
 Box.test(pC$random) 
 ```
 
+## Pronósticos
+Suavizar y calcular el pronóstico de cada producto, es decir, del producto A, del producto B y del producto C.
 ```{r}
 # --------------------------------- PRODUCTO A --------------------------------- 
 pronos1A = ma(productoA, order=3) # Media móvil (serie, periodos hacia atrás)
@@ -279,6 +283,8 @@ summary(fcA)
 fcPA = forecast(fcA); plot(fcPA)
 print(fcPA)
 
+
+
 # --------------------------------- PRODUCTO B --------------------------------- 
 pronos1B = ma(productoB, order=3) # Media móvil (serie, periodos hacia atrás)
 plot(productoB)
@@ -303,6 +309,8 @@ fcB = sma(productoB, order=4, h=4, silent=FALSE) # SmoothMovingAverage
 summary(fcB)
 fcPB = forecast(fcB); plot(fcPB)
 print(fcPB)
+
+
 
 # --------------------------------- PRODUCTO C --------------------------------- 
 pronos1C = ma(productoC, order=3) # Media móvil (serie, periodos hacia atrás)
@@ -329,4 +337,10 @@ summary(fcC)
 fcPC = forecast(fcC); plot(fcPC)
 print(fcPC)
 ```
+
+<br>
+<br>
+<br>
+<br>
+
 
