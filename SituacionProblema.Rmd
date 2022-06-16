@@ -175,6 +175,8 @@ Afortunadamente, todas las pruebas cumplieron con el requisito de tener un valor
 <br>
 
 ## Series de tiempo
+
+En este bloque de código se leen los datos, se convierten a un objeto de tipo serie de tiempo y hacemos el diagrama de caja y brazos para cada producto, es decir, para el producto A, el producto B y el producto C.
 ```{r}
 # Lectura de los datos
 piezas = read_excel("./Datos_reto.xlsx", sheet=1, skip=2)
@@ -253,6 +255,8 @@ mean(pC$random)
 Box.test(pC$random) 
 ```
 
+
+**Suavización y pronóstico para el Producto A**
 ```{r}
 pronos1A = ma(productoA, order=3) # Media móvil (serie, periodos hacia atrás)
 plot(productoA)
@@ -277,4 +281,68 @@ fcPA = forecast(fcA); plot(fcPA)
 fcPA
 print(fcPA)
 ```
+
+<br>
+
+**Suavización y pronóstico para el Producto B**
+```{r}
+pronos1A = ma(productoA, order=3) # Media móvil (serie, periodos hacia atrás)
+plot(productoA)
+lines(pronos1A, col="red")
+
+model1A = arima(productoA, order=c(0,0,0)) # c(p,d,q) c(AutoRegresivo,I,MA)
+pAadd = decompose(productoA, type="additive")
+pAmult = decompose(productoA, type="multiplicative")
+summary(model1A)
+
+auto.arima(productoA, trace=T) # En automático selecciona los valores para AR,I,MA
+                               # Best model: ARIMA(0,0,0)
+
+pAforecast = forecast(model1A, h=5); pAforecast
+plot(pAforecast)
+
+forecastA = predict(model1A, 5); forecastA
+
+fcA = sma(productoA, order=3, h=4, silent=FALSE) # SmoothMovingAverage
+summary(fcA)
+fcPA = forecast(fcA); plot(fcPA)
+fcPA
+print(fcPA)
+```
+
+<br>
+
+**Suavización y pronóstico para el Producto C**
+```{r}
+pronos1A = ma(productoA, order=3) # Media móvil (serie, periodos hacia atrás)
+plot(productoA)
+lines(pronos1A, col="red")
+
+model1A = arima(productoA, order=c(0,0,0)) # c(p,d,q) c(AutoRegresivo,I,MA)
+pAadd = decompose(productoA, type="additive")
+pAmult = decompose(productoA, type="multiplicative")
+summary(model1A)
+
+auto.arima(productoA, trace=T) # En automático selecciona los valores para AR,I,MA
+                               # Best model: ARIMA(0,0,0)
+
+pAforecast = forecast(model1A, h=5); pAforecast
+plot(pAforecast)
+
+forecastA = predict(model1A, 5); forecastA
+
+fcA = sma(productoA, order=3, h=4, silent=FALSE) # SmoothMovingAverage
+summary(fcA)
+fcPA = forecast(fcA); plot(fcPA)
+fcPA
+print(fcPA)
+```
+
+
+
+<br>
+<br>
+<br>
+<br>
+
 
