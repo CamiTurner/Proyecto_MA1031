@@ -113,3 +113,5 @@ acf(yC, plot=FALSE)$acf # Altura de las líneas
 #   H0: Ruido blanco
 #   Ha: No es ruido blanco
 #   Si p-value >= alpha     NO RECHAZO HIPÓTESIS NULA
+
+
