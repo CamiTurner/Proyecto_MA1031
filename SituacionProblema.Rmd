@@ -256,7 +256,7 @@ Box.test(pC$random)
 ```
 
 
-**Suavización y pronóstico para el Producto A**
+**Suavización y pronóstico para el Producto A, Producto B y Producto C**
 ```{r}
 # --------------------------------- PRODUCTO A --------------------------------- 
 pronos1A = ma(productoA, order=3) # Media móvil (serie, periodos hacia atrás)
@@ -284,6 +284,8 @@ fcPA = forecast(fcA); plot(fcPA)
 fcPA
 print(fcPA)
 
+
+
 # --------------------------------- PRODUCTO B --------------------------------- 
 pronos1B = ma(productoB, order=3) # Media móvil (serie, periodos hacia atrás)
 plot(productoB)
@@ -308,6 +310,8 @@ fcB = sma(productoB, order=4, h=4, silent=FALSE) # SmoothMovingAverage
 summary(fcB)
 fcPB = forecast(fcB); plot(fcPB)
 print(fcPB)
+
+
 
 # --------------------------------- PRODUCTO C --------------------------------- 
 pronos1C = ma(productoC, order=3) # Media móvil (serie, periodos hacia atrás)
@@ -334,64 +338,6 @@ summary(fcC)
 fcPC = forecast(fcC); plot(fcPC)
 print(fcPC)
 ```
-
-<br>
-
-**Suavización y pronóstico para el Producto B**
-```{r}
-pronos1A = ma(productoA, order=3) # Media móvil (serie, periodos hacia atrás)
-plot(productoA)
-lines(pronos1A, col="red")
-
-model1A = arima(productoA, order=c(0,0,0)) # c(p,d,q) c(AutoRegresivo,I,MA)
-pAadd = decompose(productoA, type="additive")
-pAmult = decompose(productoA, type="multiplicative")
-summary(model1A)
-
-auto.arima(productoA, trace=T) # En automático selecciona los valores para AR,I,MA
-                               # Best model: ARIMA(0,0,0)
-
-pAforecast = forecast(model1A, h=5); pAforecast
-plot(pAforecast)
-
-forecastA = predict(model1A, 5); forecastA
-
-fcA = sma(productoA, order=3, h=4, silent=FALSE) # SmoothMovingAverage
-summary(fcA)
-fcPA = forecast(fcA); plot(fcPA)
-fcPA
-print(fcPA)
-```
-
-<br>
-
-**Suavización y pronóstico para el Producto C**
-```{r}
-pronos1A = ma(productoA, order=3) # Media móvil (serie, periodos hacia atrás)
-plot(productoA)
-lines(pronos1A, col="red")
-
-model1A = arima(productoA, order=c(0,0,0)) # c(p,d,q) c(AutoRegresivo,I,MA)
-pAadd = decompose(productoA, type="additive")
-pAmult = decompose(productoA, type="multiplicative")
-summary(model1A)
-
-auto.arima(productoA, trace=T) # En automático selecciona los valores para AR,I,MA
-                               # Best model: ARIMA(0,0,0)
-
-pAforecast = forecast(model1A, h=5); pAforecast
-plot(pAforecast)
-
-forecastA = predict(model1A, 5); forecastA
-
-fcA = sma(productoA, order=3, h=4, silent=FALSE) # SmoothMovingAverage
-summary(fcA)
-fcPA = forecast(fcA); plot(fcPA)
-fcPA
-print(fcPA)
-```
-
-
 
 <br>
 <br>
